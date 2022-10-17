@@ -26,7 +26,7 @@ public class RegistrationService {
                         request.getPassword(),
                         AppUserRole.USER,
                         false,
-                        true
+                        false
                 )
         );
     }
