@@ -29,12 +29,17 @@ public class AppUserService implements UserDetailsService {
     }
 
     public String signUpUser(AppUser appUser) {
-        boolean userExists = appUserRepository
-                .findByEmail(appUser.getEmail())
-                .isPresent();
+        Optional<AppUser> user = appUserRepository.findByEmail(appUser.getEmail());
+
+        boolean userExists = user.isPresent();
 
         if (userExists) {
-            throw new IllegalStateException("Email already taken");
+
+            if (user.get().getEnabled()) {
+                System.out.println("Hello");
+                throw new IllegalStateException("Email already taken");
+            }
+            this.enableAppUser(appUser.getEmail());
         }
 
         String encodedPassword = bCryptPasswordEncoder
