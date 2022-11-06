@@ -24,7 +24,8 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v*/registration/**")
+                // it removes Spring security authentication in these urls
+                .antMatchers("/api/v*/registration/**", "/", "/css/**", "/js/**", "/services")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and()
