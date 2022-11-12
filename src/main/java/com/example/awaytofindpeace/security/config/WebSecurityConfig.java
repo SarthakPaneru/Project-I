@@ -17,6 +17,7 @@ public class WebSecurityConfig {
     private final AppUserService appUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
     // WebSecurityConfigureAdapter is deprecated so use following
     // beans instead
     @Bean
@@ -25,18 +26,25 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 // it removes Spring security authentication in these urls
-                .antMatchers("/api/v*/registration/**", "/", "/css/**", "/js/**", "/services")
+                .antMatchers("/api/v*/registration/**", "/", "/css/**", "/js/**", "/img/**", "/fonts/**", "/services", "/pricing", "/choose-doctor")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and()
-                .formLogin();
+                .formLogin().loginPage("/login_page")
+                .loginProcessingUrl("/login")
+                .usernameParameter("email").passwordParameter("password")
+                .defaultSuccessUrl("/", true)
+//                .failureUrl("/login?error=true")
+                .and()
+                .logout();
+        http.authenticationProvider(authenticationProvider());
 
         return http.build();
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().antMatchers("/images/**", "/js/**");
+        return web -> web.ignoring().antMatchers("/images/**", "/js/**", "/register", "/login_page");
     }
 
     @Bean
@@ -48,6 +56,4 @@ public class WebSecurityConfig {
 
         return authProvider;
     }
-
-
 }

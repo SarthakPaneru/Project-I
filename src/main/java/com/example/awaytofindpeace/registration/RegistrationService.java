@@ -32,6 +32,7 @@ public class RegistrationService {
                         request.getLastName(),
                         request.getEmail(),
                         request.getPassword(),
+                        null,
                         AppUserRole.USER,
                         false,
                         false

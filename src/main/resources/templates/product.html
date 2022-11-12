@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Contact Us</title>
+
+    <div th:insert="index.html::headerfiles"></div>
+    <link rel="stylesheet" href="https://cdn.reflowhq.com/v2/toolkit.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+
+
+</head>
+
+<body>
+    <div th:insert="index.html::header"></div>
+    <section class="py-5">
+        <div class="container py-5">
+            <div data-reflow-type="product" data-bss-dynamic-product data-bss-dynamic-product-param="product" data-reflow-shoppingcart-url="shopping-cart.html">
+                <div class="reflow-product">
+                    <div class="ref-media">
+                        <div class="ref-preview"><img class="ref-image active" src="https://cdn.bootstrapstudio.io/products/product-30_md.jpg" data-reflow-preview-type="image" /></div>
+                        <div class="ref-sale-badge">1/5</div>
+                    </div>
+                    <div class="ref-product-data">
+                        <h2 class="ref-name" th:text="${doctorUser.firstName}"></h2>
+                        <div class="ref-categories"><span class="ref-category">Psychiatrist</span></div>
+<!--                        <strong class="ref-price ref-on-sale"><s class="ref-original-price">$100.00</s>$23.51</strong><span data-reflow-type="add-to-cart" data-reflow-shoppingcart-url="shopping-cart.html" data-reflow-addtocart-text data-reflow-product="43218622" data-reflow-variant="199976733_s">-->
+                        <div class="ref-product-controls">
+                            <form th:action="@{success}" method="post">
+                            <div class="ref-variant" ><label><span>Choose Doctor  </span>
+                                <select class="ref-form-control ref-field-variants" id="variant-state" name="variant-state" onchange="if (this.value) window.location.href=this.value" required>
+                                    <option></option>
+                                    <div th:each="doctor: ${doctors}">
+                                        <option><a class="" th:text="${doctor.id}" th:value="${doctor.id}" th:selected="${doctorUser.id == doctor.id}"></a></option>
+                                    </div>
+                                </select></label></div>
+                                    <p th:text="${doctorUser.desc}"></p>
+<!--                                <span data-reflow-variant="199976733_s" data-reflow-product="43218622" data-reflow-max-qty="999" data-reflow-quantity="1">-->
+<!--                                <div class="ref-quantity-widget">-->
+<!--                                    <div class="ref-decrease"><span></span></div><input type="text" value="1" />-->
+<!--                                    <div class="ref-increase"><span></span></div>-->
+<!--                                </div>-->
+<!--                            </span>-->
+                                <label>Select Date: </label>
+                                <input type="date" name="availableDate" min="2022-11-10" max="2022-12-10">
+                                <br>
+                                <label>Select Time: </label>
+                                <select class="ref-form-control ref-field-variants" name="availableTime" required>
+                                    <option value="199976733_s">9 - 10</option>
+                                    <option value="199976733_m">10 - 11</option>
+                                    <option value="199976733_l">11 - 12</option>
+                                </select>
+                                <br>
+                                <input class="ref-button" type="submit" value="Submit">
+                            </form>
+                        </div>
+                    </span>
+                        <br>
+                        <div class="ref-description"><strong>About Me</strong><br><p th:text="${doctorUser.desc}">Hey there Its me your own brother wo will cure you with care</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div th:insert="index.html::footer"></div>
+    <script src="https://cdn.reflowhq.com/v2/toolkit.min.js"></script>
+
+
+</body>
+
+</html>

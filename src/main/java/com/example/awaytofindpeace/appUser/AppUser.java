@@ -1,5 +1,7 @@
 package com.example.awaytofindpeace.appUser;
 
+import com.example.awaytofindpeace.doctor.DoctorUser;
+import com.sun.istack.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,11 +32,15 @@ public class AppUser implements UserDetails {
             strategy = GenerationType.SEQUENCE,
             generator = "person_sequence"
     )
-    private long id;
+    private Long id;
+
+    //@NotEmpty(message = "")
     private String firstName;
     private String lastName;
     private String email;
     private String password;
+
+    private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     private Boolean locked;
@@ -44,6 +50,7 @@ public class AppUser implements UserDetails {
                    String lastName,
                    String email,
                    String password,
+                   String phoneNumber,
                    AppUserRole appUserRole,
                    Boolean locked,
                    Boolean enabled) {
@@ -51,6 +58,7 @@ public class AppUser implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.phoneNumber=phoneNumber;
         this.appUserRole = appUserRole;
         this.locked = locked;
         this.enabled = enabled;

@@ -1,8 +1,12 @@
 package com.example.awaytofindpeace.appUser;
 
+import com.example.awaytofindpeace.doctor.DoctorUserRepository;
+import com.example.awaytofindpeace.doctor.DoctorUser;
 import com.example.awaytofindpeace.registration.token.ConfirmationToken;
 import com.example.awaytofindpeace.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
+    import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +25,9 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+
+    private final DoctorUserRepository doctorUserRepository;
+
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
@@ -49,6 +56,16 @@ public class AppUserService implements UserDetailsService {
 
         appUserRepository.save(appUser);
 
+        // Copy the details of AppUser to DoctorUser
+        if(appUser.getAppUserRole().equals("DOCTOR")) {
+            DoctorUser doctorUser1 = new DoctorUser(
+                    appUser.getFirstName(),
+                    appUser.getLastName(),
+                    appUser.getEmail(),
+                    "Hey"
+            );
+        }
+
         // Send Confirmation token
         String token = UUID.randomUUID().toString();
 
@@ -68,5 +85,97 @@ public class AppUserService implements UserDetailsService {
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+//    public void isDoctor(AppUser appUser) {
+//        if (appUser.getAppUserRole().equals("DOCTOR")) {
+//
+//        }
+//    }
+
+    // Insert data in database at system startup
+    @EventListener
+    public void atStart(ApplicationReadyEvent event) {
+        appUserRepository.save(new AppUser(
+                "hello",
+                "hello",
+                "hello@gmail.com",
+                bCryptPasswordEncoder.encode("hello"),
+                "123456789",
+                AppUserRole.ADMIN,
+                false,
+                true
+        ));
+        appUserRepository.save(new AppUser(
+                "hello1",
+                "hello",
+                "hello1@gmail.com",
+                bCryptPasswordEncoder.encode("hello"),
+                "123456789",
+                AppUserRole.USER,
+                false,
+                true
+        ));
+        appUserRepository.save(new AppUser(
+                "hello2",
+                "hello",
+                "hello2@gmail.com",
+                bCryptPasswordEncoder.encode("hello"),
+                "123456789",
+                AppUserRole.USER,
+                false,
+                true
+        ));
+        appUserRepository.save(new AppUser(
+                "hello3",
+                "hello",
+                "hello3@gmail.com",
+                bCryptPasswordEncoder.encode("hello"),
+                "123456789",
+                AppUserRole.USER,
+                false,
+                true
+        ));
+        AppUser appUser1 = appUserRepository.save(new AppUser(
+                "hello4",
+                "hello",
+                "hello4@gmail.com",
+                bCryptPasswordEncoder.encode("hello"),
+                null,
+                AppUserRole.DOCTOR,
+                false,
+                true
+        ));
+        AppUser appUser2 = appUserRepository.save(new AppUser(
+                "hello5",
+                "hello",
+                "hello5@gmail.com",
+                bCryptPasswordEncoder.encode("hello"),
+                null,
+                AppUserRole.DOCTOR,
+                false,
+                true
+        ));
+
+
+//        Optional<AppUser> appUser1 = appUserRepository.findByEmail("hello4@gmail.com");
+//        Optional<AppUser> appUser2 = appUserRepository.findByEmail("hello5@gmail.com");
+
+        doctorUserRepository.save( new DoctorUser(
+                appUser1.getFirstName(),
+                appUser1.getLastName(),
+                appUser1.getEmail(),
+                "Hey there from hello4"
+
+        ));
+
+        doctorUserRepository.save( new DoctorUser(
+                appUser2.getFirstName(),
+                appUser2.getLastName(),
+                appUser2.getEmail(),
+                "Hey there from hello5"
+
+        ));
+
     }
 }

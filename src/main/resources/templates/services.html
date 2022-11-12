@@ -1,10 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Services</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <title>Services</title>
+
+    <div th:insert="index.html::headerfiles"></div>
+
+</head>
+
+<body style="/*background: url(&quot;design.jpg&quot;);*/background-position: 0 -60px;">
+    <div th:insert="index.html :: header"></div>
+    <section class="py-5 mt-5">
+        <div class="container py-5">
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+                    <p class="fw-bold text-success mb-2">Our Services</p>
+                    <h3 class="fw-bold">What we can do for you</h3>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col mb-5"><img class="rounded img-fluid shadow" th:src="@{/img/woman2.jpg}"></div>
+                <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5">
+                    <div>
+                        <h5 class="fw-bold">Professional Therapy and sessions.</h5>
+                        <p class="text-muted mb-4">We provide both online and offline face to face 1 hour therapy with our certified professionals.</p><button class="btn btn-primary shadow" type="button">Learn more</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col order-md-last mb-5"><img class="rounded img-fluid shadow" src="assets/img/products/2.jpg"></div>
+                <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5">
+                    <div>
+                        <h5 class="fw-bold">Daily dose of motivation</h5>
+                        <p class="text-muted mb-4">Our free and pro subscription includes service to provide with motivational quotes every day to your preferred phone number or email.</p><button class="btn btn-primary shadow" type="button">Learn more</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 mx-auto" style="max-width: 900px;">
+                <div class="col mb-5"><img class="rounded img-fluid shadow" src="assets/img/products/3.jpg"></div>
+                <div class="col d-md-flex align-items-md-end align-items-lg-center mb-5">
+                    <div>
+                        <h5 class="fw-bold">Meditaion</h5>
+                        <p class="text-muted mb-4">Our experts helps you with appropriate meditation to help you cope with difficulties</p><button class="btn btn-primary shadow" type="button">Learn more</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div th:insert="index.html::footer"></div>
 </body>
+
 </html>
