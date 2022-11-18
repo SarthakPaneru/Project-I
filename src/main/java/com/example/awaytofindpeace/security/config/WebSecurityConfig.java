@@ -23,10 +23,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+//              using another token mechanism.
                 .csrf().disable()
                 .authorizeRequests()
                 // it removes Spring security authentication in these urls
-                .antMatchers("/api/v*/registration/**", "/", "/css/**", "/js/**", "/img/**", "/fonts/**", "/services", "/pricing", "/choose-doctor")
+                .antMatchers("/api/v*/registration/**", "/", "/css/**", "/js/**", "/img/**", "/fonts/**", "/services", "/pricing", "/choose-doctor/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and()

@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,6 +93,14 @@ public class AppUserService implements UserDetailsService {
 //
 //        }
 //    }
+
+    public List<AppUser> getAllUser() {
+        return appUserRepository.findAll();
+    }
+
+    public void deleteUser(int id) {
+        appUserRepository.deleteAppUserById(id);
+    }
 
     // Insert data in database at system startup
     @EventListener
@@ -178,4 +187,5 @@ public class AppUserService implements UserDetailsService {
         ));
 
     }
+
 }

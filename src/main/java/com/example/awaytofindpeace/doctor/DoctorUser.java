@@ -35,12 +35,12 @@ public class DoctorUser {
 
 
 
-//    @OneToMany
-//    @JoinColumn(
+    @ManyToOne
+    @JoinColumn(
 //            nullable = false,
-//            name = "doctor_user_id1"
-//    )
-//    private Set<AppUser> appUser;
+            name = "doctor_user_id1"
+    )
+    private AppUser appUser;
 
     // Doctor ko appointment date hunu vanda patient ko banako ramro
 //    @OneToMany

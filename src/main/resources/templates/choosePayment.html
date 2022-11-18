@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:insert="index.html::headerfiles"></div>
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
+</head>
+<body>
+    <div th:insert="index.html::header"></div>
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row mb-4 mb-lg-5">
+                <div class="col-md-8 col-xl-6 text-center mx-auto">
+<!--                    <p class="fw-bold text-success mb-2">Login</p>-->
+                    <h2 class="fw-bold">Choose Payment</h2>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6 col-xl-4">
+                    <div class="card">
+                        <div class="card-body text-center d-flex flex-column align-items-center">
+<!--                            <div class="bs-icon-xl bs-icon-circle bs-icon-primary shadow bs-icon my-4">-->
+<!--                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-person">-->
+<!--                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.67z   8.678-.83 1.418-.832 1.664h10z"></path>-->
+<!--                            </svg>-->
+<!--                                <svg th:xmlns="@{img/online-shop-svgrepo-com.svg}"></svg>-->
+                                <img class="w-25 p-3"  th:src="@{/img/online-shop-svgrepo-com.svg}">
+<!--                            </div>-->
+                            <form th:action="@{/success/{id}(id=${id})}" method="PUT" modelAttribute="patient">
+                                <div class="mb-3"><label>
+                                    <input class="form-control" type="text" path="{appointmentPaid}" name="appointmentPaid" placeholder="Enter total amount" required>
+                                </label></div>
+                                <div class="mb-3"><button class="btn btn-primary shadow d-block w-100" type="submit">Pay Cash</button></div>
+
+                            </form>
+                            <form action="" method="post">
+                                <div class="mb-1"><button class="btn btn-primary shadow d-block w-100">Pay with Khalti</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:insert="index.html::footer"></div>
+
+    <script>
+        var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
+            "productIdentity": "1234567890",
+            "productName": "Dragon",
+            "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+            ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            checkout.show({amount: 1000});
+        }
+    </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -22,5 +23,8 @@ public class DoctorService {
         return doctorUserRepository.findAll();
     }
 
-
+    public DoctorUser findById(Integer id) {
+        return doctorUserRepository.findById(id.longValue())
+                .orElse(null);
+    }
 }
